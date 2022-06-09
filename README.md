@@ -1,1 +1,0 @@
-A basic project in microservices architecture.
