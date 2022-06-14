@@ -19,6 +19,7 @@ import br.com.samuel.customer.serializer.CustomerSerializer;
 // Lazy annotation on class level so all methods are loaded lazily to avoid circular dependencies problem.
 
 @Configuration
+@Lazy
 public class KafkaProducerConfig {
 
 	@Value("${spring.kafka.bootstrap-servers}")
