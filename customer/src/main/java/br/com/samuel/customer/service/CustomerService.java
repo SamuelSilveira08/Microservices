@@ -1,6 +1,5 @@
 package br.com.samuel.customer.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,7 +14,7 @@ public class CustomerService {
 	private final CustomerRepository customerRepository;
 	@SuppressWarnings(value = { "unused" })
 	private final RestTemplate restTemplate;
-	@Autowired
+
 	private KafkaTemplate<String, Customer> kafkaTemplate;
 
 	public CustomerService(CustomerRepository customerRepository, RestTemplate restTemplate) {
@@ -39,6 +38,10 @@ public class CustomerService {
 //		if (fraudCheck.isFraudster()) {
 //			throw new IllegalStateException("Customer is a fraudster");
 //		}
+	}
+
+	public void setKafkaTemplate(KafkaTemplate<String, Customer> kafkaTemplate) {
+		this.kafkaTemplate = kafkaTemplate;
 	}
 
 }
