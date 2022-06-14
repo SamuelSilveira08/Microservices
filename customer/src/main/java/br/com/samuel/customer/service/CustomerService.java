@@ -1,6 +1,5 @@
 package br.com.samuel.customer.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -8,21 +7,24 @@ import org.springframework.web.client.RestTemplate;
 import br.com.samuel.customer.domain.Customer;
 import br.com.samuel.customer.dto.CustomerDto;
 import br.com.samuel.customer.repository.CustomerRepository;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class CustomerService {
 
 	private final CustomerRepository customerRepository;
 	@SuppressWarnings(value = { "unused" })
 	private final RestTemplate restTemplate;
+	private final KafkaTemplate<String, Customer> kafkaTemplate;
 
-	private KafkaTemplate<String, Customer> kafkaTemplate;
-
-	public CustomerService(CustomerRepository customerRepository, RestTemplate restTemplate) {
-		super();
-		this.customerRepository = customerRepository;
-		this.restTemplate = restTemplate;
-	}
+//	public CustomerService(CustomerRepository customerRepository, RestTemplate restTemplate,
+//			@Lazy KafkaTemplate<String, Customer> kafkaTemplate) {
+//		super();
+//		this.customerRepository = customerRepository;
+//		this.restTemplate = restTemplate;
+//		this.kafkaTemplate = kafkaTemplate;
+//	}
 
 	public void registerCustomer(CustomerDto registeringCustomer) {
 
@@ -39,11 +41,6 @@ public class CustomerService {
 //		if (fraudCheck.isFraudster()) {
 //			throw new IllegalStateException("Customer is a fraudster");
 //		}
-	}
-
-	@Autowired
-	public void setKafkaTemplate(KafkaTemplate<String, Customer> kafkaTemplate) {
-		this.kafkaTemplate = kafkaTemplate;
 	}
 
 }
