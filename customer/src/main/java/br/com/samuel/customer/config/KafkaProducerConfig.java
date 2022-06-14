@@ -18,14 +18,14 @@ import br.com.samuel.customer.serializer.CustomerSerializer;
 
 // Lazy annotation on class level so all methods are loaded lazily to avoid circular dependencies problem.
 
-@Lazy
 @Configuration
+@Lazy
 public class KafkaProducerConfig {
 
 	@Value("${spring.kafka.bootstrap-servers}")
 	private String bootstrapServers;
 
-	@Bean
+	@Bean("producerConfig")
 	public Map<String, Object> producerConfig() {
 		Map<String, Object> properties = new HashMap<>();
 		properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -35,12 +35,12 @@ public class KafkaProducerConfig {
 	}
 
 	// Using dependency injection to set producerConfig into the producerFactory
-	@Bean
+	@Bean("producerFactory")
 	public ProducerFactory<String, Customer> producerFactory(Map<String, Object> producerConfig) {
 		return new DefaultKafkaProducerFactory<String, Customer>(producerConfig);
 	}
 
-	@Bean
+	@Bean("kafkaTemplate")
 	public KafkaTemplate<String, Customer> kafkaTemplate(ProducerFactory<String, Customer> producerFactory) {
 		return new KafkaTemplate<String, Customer>(producerFactory);
 	}

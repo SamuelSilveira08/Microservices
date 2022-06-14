@@ -6,7 +6,6 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.samuel.customer.domain.Customer;
 import br.com.samuel.customer.dto.CustomerDto;
-import br.com.samuel.customer.dto.FraudCheckDto;
 import br.com.samuel.customer.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 
@@ -15,8 +14,9 @@ import lombok.AllArgsConstructor;
 public class CustomerService {
 
 	private final CustomerRepository customerRepository;
+	@SuppressWarnings(value = { "unused" })
 	private final RestTemplate restTemplate;
-//	private final KafkaTemplate<String, Customer> kafkaTemplate;
+	private KafkaTemplate<String, Customer> kafkaTemplate;
 
 	public void registerCustomer(CustomerDto registeringCustomer) {
 
@@ -25,7 +25,7 @@ public class CustomerService {
 		customerRepository.saveAndFlush(customer);
 //		FraudCheckDto fraudCheck = restTemplate.getForObject("http://FRAUD/api/v1/fraud-check/{customerId}",
 //				FraudCheckDto.class, customer.getId());
-//		kafkaTemplate.send("customer-topic", customer);
+		kafkaTemplate.send("customer-topic", customer);
 
 //		if (fraudCheck == null) {
 //			throw new NullPointerException("Service fraud didn't return a fraud check");
