@@ -2,13 +2,12 @@ package br.com.samuel.fraud.deserializer;
 
 import org.apache.commons.lang.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
-import org.springframework.kafka.support.converter.MessageConverter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.samuel.fraud.domain.Customer;
 
-public class CustomerDeserializer implements Deserializer<Customer>, MessageConverter {
+public class CustomerDeserializer implements Deserializer<Customer> {
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
