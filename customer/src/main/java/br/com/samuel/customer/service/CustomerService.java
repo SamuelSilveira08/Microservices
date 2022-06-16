@@ -33,7 +33,7 @@ public class CustomerService {
 		customerRepository.saveAndFlush(customer);
 //		FraudCheckDto fraudCheck = restTemplate.getForObject("http://FRAUD/api/v1/fraud-check/{customerId}",
 //				FraudCheckDto.class, customer.getId());
-		kafkaTemplate.send("customer-topic", customer);
+		kafkaTemplate.send("customer-topic", "customer", customer);
 
 //		if (fraudCheck == null) {
 //			throw new NullPointerException("Service fraud didn't return a fraud check");
