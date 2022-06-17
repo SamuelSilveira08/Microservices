@@ -24,15 +24,22 @@ public class FraudCheckService {
 	@KafkaListener(topics = "customer-topic", groupId = "customer.topic.group", containerFactory = "kafkaListenerContainerFactory")
 	public boolean isFraudulentCustomer(@Payload Customer customer) {
 		log.info(customer.toString());
+
+		// customer comes without id
+		// maybe I have to add it before setting customer into fraudCheckHistory
+		
+		// But why is customers being saved with a gap between the ids?
+		// Like 1, 3, 5
+		// It's because of the exception that is being thrown, but why exactly it skips one number?
+		
+		// Well, actually it's related to hibernate sequence. I don't know why, but it's not defining
+		// one id sequence for each table, but for the two tables in database
 		
 		customerRepository.save(customer);
-		
-		fraudRepository.save(FraudCheckHistory.builder()
-				.isFraudster(false)
-				.customer(customer)
-				.createdAt(LocalDateTime.now())
-				.build());
-		
+
+		fraudRepository.save(FraudCheckHistory.builder().isFraudster(false).customer(customer)
+				.createdAt(LocalDateTime.now()).build());
+
 		return false;
 	}
 
