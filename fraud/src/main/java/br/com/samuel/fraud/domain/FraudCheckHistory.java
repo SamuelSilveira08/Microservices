@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class FraudCheckHistory {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
 	@JoinColumn(name="customer_id")

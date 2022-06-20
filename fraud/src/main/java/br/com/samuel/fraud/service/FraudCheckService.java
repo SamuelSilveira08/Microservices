@@ -1,7 +1,6 @@
 package br.com.samuel.fraud.service;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -36,7 +35,7 @@ public class FraudCheckService {
 		// Well, actually it's related to hibernate sequence. I don't know why, but it's not defining
 		// one id sequence for each table, but for the two tables in database
 		
-		customer = customerRepository.save(customer);
+		customerRepository.save(customer);
 		
 		System.out.println(customer.getId());
 		
